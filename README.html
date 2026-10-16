@@ -14,37 +14,37 @@
 <div class="pw-navbar"><a class="pw-brand" href="index.html">多意识体中文百科 · 离线存档</a><a href="search.html">搜索</a><a href="README.html">存档说明</a></div>
 <main class="pw-page">
 <h1>关于这份存档</h1>
-<p>本站点是 <code>wiki.pluralitycn.com</code>（多意识体中文百科）的一次<b>完整离线快照</b>，
-抓取于 <b>2026-10-16</b>（源站为 MediaWiki 1.43.11）。快照不依赖源站，所有页面、样式、
-图片与图标都在本仓库内。</p>
+<p>本站点是 <code>wiki.pluralitycn.com</code>（多意识体中文百科）的离线快照，
+抓取于 <b>2026-10-16 06:53 UTC</b>（源站 MediaWiki MediaWiki 1.43.11）。快照不依赖源站，页面、样式、图片与图标
+都在本仓库内；服务器每 12 小时检查一次源站是否有改动。</p>
 
 <p><a href="index.html">回到首页</a> · <a href="search.html">全文搜索</a></p>
 
 <h2>内容范围</h2>
 <table>
-<tr><th>项目</th><th>数量</th><th>说明</th></tr>
-<tr><td>正文条目</td><td>193</td><td>命名空间 0、PluralWikiCN、帮助、分类</td></tr>
-<tr><td>重定向存根</td><td>60</td><td>访问即跳转到目标条目</td></tr>
-<tr><td>图片与图标</td><td>103</td><td>含 68 个 SVG 图标、10 个字体文件</td></tr>
+<tr><th>项目</th><th>数量</th></tr>
+<tr><td>正文条目</td><td>192</td></tr>
+<tr><td>重定向存根</td><td>61</td></tr>
+<tr><td>图片、图标与字体</td><td>115</td></tr>
+<tr><td>源站页面总数</td><td>367</td></tr>
 </table>
-<p>未被收录：<code>帮助:Infobox/user style</code>（无页面链接指向它），以及 4 张没有任何条目
-使用的孤儿图片。它们仍保留在下面的原始数据包里。</p>
 
 <h2>原始数据与 ZIM</h2>
-<p>渲染页面之外，本仓库 <code>archive/</code> 目录还放了可直接复用的原始数据：</p>
+<p>渲染页面之外，<code>archive/</code> 目录还放了可直接复用的原始数据：</p>
 <table>
 <tr><th>文件</th><th>内容</th></tr>
-<tr><td><code>pluralitycn-wiki_full_2026-10.zim</code></td><td>ZIM 归档，含全文索引；可用 Kiwix 桌面版／安卓版打开</td></tr>
-<tr><td><code>pluralitycn-master-20261016.tar.gz</code></td><td>维基源码全量导出：368 个页面、1715 个历史版本（dump XML，可用 <code>importDump.php</code> 重建站点）＋全部 20 张图片原文件</td></tr>
+<tr><td><code>pluralitycn-wiki.zim</code></td><td>ZIM 归档，含全文索引，可用 Kiwix 桌面版／安卓版打开（1457 KiB）</td></tr>
+<tr><td><code>pluralitycn-source-dump.tar.gz</code></td><td>维基源码导出：368 个页面、1715 个历史版本的 dump XML ＋全部图片原文件，可用 <code>importDump.php</code> 重建站点</td></tr>
 <tr><td><code>SHA256SUMS.txt</code></td><td>上述文件的校验和</td></tr>
 </table>
 
 <h2>已知取舍</h2>
 <ul>
 <li>页面为服务端渲染结果，脚本已移除，因此只有浏览与搜索，没有编辑、历史对比、用户页面等功能。</li>
-<li>样式沿用源站皮肤 Citizen 的设计变量；深色模式随系统的深浅色偏好自动切换。</li>
+<li>样式沿用源站皮肤 Citizen 的设计变量（抓取工具会漏掉这份变量表，同步流程会补回来）；深色模式随系统偏好切换。</li>
 <li>指向 wiki.pluralitycn.com 的链接已全部改写为站内地址；指向外部网站的链接保持原样。</li>
 <li>搜索是本地子串匹配（标题加权），不是源站的分词引擎；结果顺序可能与线上不同。</li>
+<li>没有任何条目链接的孤立页面与孤儿图片不会出现在渲染页里，但都在上面的源码包内。</li>
 </ul>
 
 <p style="margin-top:2.5em">本存档仅按原样保留内容，条目著作权仍归原作者与源站社区所有。</p>
