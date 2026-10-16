@@ -4,68 +4,63 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>搜索 - 多意识体中文百科离线存档</title>
-<style>
- body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans SC",sans-serif;
-      margin:0;background:#f8f9fa;color:#202122}
- .wrap{max-width:52em;margin:0 auto;padding:1.5em 1em}
- h1{font-size:1.3em;margin:0 0 .8em}
- input#q{width:100%;box-sizing:border-box;padding:.6em .8em;font-size:1em;
-        border:1px solid #a2a9b1;border-radius:3px}
- .bar{margin:.8em 0;font-size:.9em;color:#54595d}
- .bar a{color:#3366cc;text-decoration:none;margin-right:1em}
- #stat{margin:.8em 0;font-size:.92em;color:#54595d}
- .r{background:#fff;border:1px solid #e2e4e8;border-radius:3px;padding:.8em 1em;margin:.5em 0}
- .r a{color:#3366cc;text-decoration:none;font-size:1.05em}
- .r a:hover{text-decoration:underline}
- .s{color:#3c434a;font-size:.9em;margin-top:.35em;line-height:1.5}
- mark{background:#fef6a5;color:inherit}
-</style>
+<link rel="stylesheet" href="_mw_/site.styles.css">
+<link rel="stylesheet" href="_mw_/skins.citizen.codex.styles.css">
+<link rel="stylesheet" href="_mw_/skins.citizen.tokens.css">
+<link rel="stylesheet" href="_mw_/skins.citizen.styles.css">
+<link rel="stylesheet" href="_res_/archive.css">
 </head>
 <body>
-<div class="wrap">
-  <h1>多意识体中文百科 · 离线存档搜索</h1>
-  <input id="q" type="search" placeholder="输入关键词，回车搜索" autofocus>
-  <div class="bar"><a href="index.html">首页</a><a href="分类/常用词汇表.html">常用词汇表</a><a href="README.html">存档说明</a></div>
-  <div id="stat">正在载入索引…</div>
-  <div id="out"></div>
-</div>
+<div class="pw-navbar"><a class="pw-brand" href="index.html">多意识体中文百科 · 离线存档</a><a href="search.html">搜索</a><a href="README.html">存档说明</a></div>
+<main class="pw-page pw-search">
+<h1>全文搜索</h1>
+<p><input id="q" type="search" placeholder="输入关键词，回车搜索" autofocus></p>
+<p id="stat" class="pw-status">正在载入索引…</p>
+<div id="out"></div>
+</main>
 <script>
-var docs=null;
-fetch('search-data.json').then(function(r){return r.json()}).then(function(d){
-  docs=d; document.getElementById('stat').textContent='索引已就绪，共 '+d.length+' 个条目。';
-}).catch(function(e){ document.getElementById('stat').textContent='索引载入失败：'+e; });
+var docs = null;
+fetch('search-data.json').then(function (r) { return r.json() }).then(function (d) {
+  docs = d;
+  document.getElementById('stat').textContent = '索引已就绪，共 ' + d.length + ' 个条目。';
+}).catch(function (e) {
+  document.getElementById('stat').textContent = '索引载入失败：' + e;
+});
 
-function esc(s){return s.replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})}
-function mark(s,q){
-  var i=s.toLowerCase().indexOf(q.toLowerCase());
-  if(i<0)return esc(s.slice(0,180));
-  var a=Math.max(0,i-60),b=Math.min(s.length,i+q.length+120);
-  return (a>0?'…':'')+esc(s.slice(a,i))+'<mark>'+esc(s.slice(i,i+q.length))+'</mark>'+
-         esc(s.slice(i+q.length,b))+(b<s.length?'…':'');
+function esc(s) { return s.replace(/[&<>]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c] }) }
+
+function snippet(text, q) {
+  var i = text.toLowerCase().indexOf(q.toLowerCase());
+  if (i < 0) return esc(text.slice(0, 180));
+  var a = Math.max(0, i - 60), b = Math.min(text.length, i + q.length + 120);
+  return (a > 0 ? '…' : '') + esc(text.slice(a, i)) + '<mark>' + esc(text.slice(i, i + q.length)) +
+    '</mark>' + esc(text.slice(i + q.length, b)) + (b < text.length ? '…' : '');
 }
-function run(){
-  if(!docs){setTimeout(run,200);return}
-  var q=document.getElementById('q').value.trim();
-  var out=document.getElementById('out'),st=document.getElementById('stat');
-  if(!q){out.innerHTML='';st.textContent='索引已就绪，共 '+docs.length+' 个条目。';return}
-  var ql=q.toLowerCase(),hits=[];
-  for(var i=0;i<docs.length;i++){
-    var d=docs[i],ti=d.t.toLowerCase().indexOf(ql),xi=d.x.toLowerCase().indexOf(ql);
-    if(ti<0&&xi<0)continue;
-    var n=0,x=d.x.toLowerCase(),p=0;
-    while((p=x.indexOf(ql,p))>=0){n++;p+=ql.length;if(n>50)break}
-    hits.push({d:d,score:n+(ti>=0?500:0)+(d.u===q||d.t===q?1000:0)});
+
+function run() {
+  if (!docs) { setTimeout(run, 200); return }
+  var q = document.getElementById('q').value.trim();
+  var out = document.getElementById('out'), st = document.getElementById('stat');
+  if (!q) { out.innerHTML = ''; st.textContent = '索引已就绪，共 ' + docs.length + ' 个条目。'; return }
+  var ql = q.toLowerCase(), hits = [];
+  for (var i = 0; i < docs.length; i++) {
+    var d = docs[i], ti = d.t.toLowerCase().indexOf(ql), xi = d.x.toLowerCase().indexOf(ql);
+    if (ti < 0 && xi < 0) continue;
+    var n = 0, x = d.x.toLowerCase(), p = 0;
+    while ((p = x.indexOf(ql, p)) >= 0) { n++; p += ql.length; if (n > 50) break }
+    hits.push({ d: d, score: n + (ti >= 0 ? 500 : 0) + (d.t === q ? 1000 : 0) });
   }
-  hits.sort(function(a,b){return b.score-a.score});
-  st.textContent=hits.length?('“'+q+'” 命中 '+hits.length+' 个条目，显示前 '+Math.min(hits.length,25)+' 个')
-                           :'“'+q+'” 没有命中条目';
-  out.innerHTML=hits.slice(0,25).map(function(h){
-    return '<div class="r"><a href="'+encodeURI(h.d.u)+'">'+esc(h.d.t)+'</a>'+
-           '<div class="s">'+mark(h.d.x,q)+'</div></div>';
+  hits.sort(function (a, b) { return b.score - a.score });
+  st.textContent = hits.length
+    ? '“' + q + '” 命中 ' + hits.length + ' 个条目，显示前 ' + Math.min(hits.length, 25) + ' 个'
+    : '“' + q + '” 没有命中条目';
+  out.innerHTML = hits.slice(0, 25).map(function (h) {
+    return '<div class="pw-hit"><a href="' + encodeURI(h.d.u) + '">' + esc(h.d.t) + '</a>' +
+      '<div class="pw-snippet">' + snippet(h.d.x, q) + '</div></div>';
   }).join('');
 }
-document.getElementById('q').addEventListener('input',run);
-document.getElementById('q').addEventListener('keyup',run);
+document.getElementById('q').addEventListener('input', run);
+document.getElementById('q').addEventListener('keyup', run);
 </script>
 </body>
 </html>
