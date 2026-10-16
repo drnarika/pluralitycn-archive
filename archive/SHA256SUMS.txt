@@ -1,2 +1,2 @@
-6e978287da9aa1b770dcea3a0323854bf4a6ec3524e280b00baa429227ca525b  pluralitycn-wiki.zim
-8335e9c08a191d71a2e612bbab83b32e14323eef67a24b86b54567e28cb0319a  pluralitycn-source-dump.tar.gz
+659f65fee12d492823e731339dbeaea3c222d8e0dd5481c948b963f59b49c178  pluralitycn-wiki.zim
+dea2d9361861f5eed9b3e5601ab558c79937297e9f662dd079a50b1b2e78bfb5  pluralitycn-source-dump.tar.gz
